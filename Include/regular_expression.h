@@ -1,0 +1,7 @@
+
+
+class RegExp {
+ public:
+ private:
+
+};
