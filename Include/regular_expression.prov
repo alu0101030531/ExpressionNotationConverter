@@ -1,0 +1,8 @@
+#include <string>
+
+class RegExp {
+ public:
+  RegExp(std::string& regexp);
+ private:
+  std::string regexp_;
+};

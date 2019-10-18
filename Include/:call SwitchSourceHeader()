@@ -1,0 +1,3 @@
+#include "regular_expression.h"
+
+RegExp(std::string& re)
