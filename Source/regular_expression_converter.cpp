@@ -4,22 +4,26 @@ RegularExpressionConverter::RegularExpressionConverter(std::string regexp)
     : postfix_converter_(regexp) {}
 
 void RegularExpressionConverter::createBinaryTree() {
-  Stack<BinaryNode<char>> tree_stack;
+  Stack<BinaryTree<char>> tree_stack;
   std::string postfix_expression = postfix_converter_.convertInfixToPostfix(); 
   for (int i = 0; i < postfix_expression.size(); i++) {
     if (isalpha(postfix_expression[i]))
-      tree_stack.push(BinaryNode<char>(postfix_expression[i]));
+      tree_stack.push(BinaryTree<char>(postfix_expression[i]));
     else if (isBinary(postfix_expression[i])) {
-      BinaryNode<char> right = tree_stack.pop();
-      BinaryNode<char> left = tree_stack.pop();
-      tree_stack.push(BinaryNode<char>(postfix_expression[i], left, right));
+      BinaryTree<char> right = tree_stack.pop();
+      BinaryTree<char> left = tree_stack.pop();
+      BinaryTree<char> middle_op(postfix_expression[i]);
+      middle_op.insertTrees(left,right);
+      tree_stack.push(middle_op);
     }
     else { 
-      BinaryNode<char> operand = tree_stack.pop();
-      tree_stack.push(BinaryNode<char>(postfix_expression[i], &operand)); 
+      BinaryTree<char> operand = tree_stack.pop();
+      BinaryTree<char> unary_op(postfix_expression[i]);
+      unary_op.insertTrees(operand);
+      tree_stack.push(unary_op); 
     }
   }
-  tree_stack.top().preorderPrint(std::cout);
+  tree_stack.top().printPreorder(std::cout);
 }
 
 bool RegularExpressionConverter::isBinary(char regexp_operator) {
