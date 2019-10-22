@@ -9,6 +9,8 @@ class BinaryNode {
   T getData() const { return data_;};
   BinaryNode<T>* getLeft() const {return left_;};
   BinaryNode<T>* getRight() const {return right_;};
+  void setLeft(BinaryNode<T>* left) {left_ = left;};
+  void setRight(BinaryNode<T>* right) {right_ = right;};
   void preorderPrint(std::ostream& os);
  private:
   void preorderPrint(std::ostream& os, BinaryNode<T>* node);

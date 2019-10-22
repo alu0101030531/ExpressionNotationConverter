@@ -1,5 +1,5 @@
 #include "postfix.h"
-#include "binary_node.h"
+#include "binary_tree.h"
 
 class RegularExpressionConverter {
  public:
