@@ -22,9 +22,9 @@ BinaryTree<char> RegularExpressionConverter::createBinaryTree() {
   std::stack<BinaryTree<char>> tree_stack;
   std::string postfix_expression = postfix_converter_.convertInfixToPostfix(); 
   for (int i = 0; i < postfix_expression.size(); i++) {
-    if (isalpha(postfix_expression[i]))
+    if (isdigit(postfix_expression[i]))
       tree_stack.push(BinaryTree<char>(postfix_expression[i]));
-    else if (isBinary(postfix_expression[i])) {
+    else { 
       BinaryTree<char> right = tree_stack.top();
       tree_stack.pop();
       BinaryTree<char> left = tree_stack.top();
@@ -33,16 +33,8 @@ BinaryTree<char> RegularExpressionConverter::createBinaryTree() {
       middle_op.insertTrees(left,right);
       tree_stack.push(middle_op);
     }
-    else { 
-      BinaryTree<char> operand = tree_stack.top();
-      tree_stack.pop();
-      BinaryTree<char> unary_op(postfix_expression[i]);
-      unary_op.insertTrees(operand);
-      tree_stack.push(unary_op); 
-    }
   } 
-  tree_stack.top().printPreorder(std::cout);
-  return tree_stack.top();
+  return tree_stack.top(); 
 }
 
 // Comprueba si el operadores es binarios

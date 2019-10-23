@@ -1,4 +1,0 @@
-#include "regular_expression.h"
-
-RegExp::RegExp(std::string& regexp): regexp_(regexp) {}
-

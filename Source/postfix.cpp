@@ -16,7 +16,7 @@
 #include <ctype.h>
 
 // Crea un objeto postfix dado un string
-PostFix::PostFix(std::string regular_expression): regular_expression_(extendedExpression(regular_expression)) {}
+PostFix::PostFix(std::string regular_expression): regular_expression_(regular_expression) {}
 
 // Extiende la expresión introduciendo concatenaciones donde aparecen de manera implícita
 std::string PostFix::extendedExpression(const std::string& expression) {
@@ -52,7 +52,7 @@ std::string PostFix::convertInfixToPostfix() {
   std::stack<char> operator_stack;
   std::string postfix_expression;
   for (int i = 0; i < regular_expression_.size(); i++) {
-    if ( isalpha(regular_expression_[i])) 
+    if ( isdigit(regular_expression_[i])) 
       postfix_expression += regular_expression_[i];
     else if (regular_expression_[i] == ')')
       postfix_expression += popUntilParenthesis(operator_stack);
@@ -115,41 +115,66 @@ std::string PostFix::popUntilPrecedence(char operator1, std::stack<char>& exp_st
 int PostFix::precedence(char operator1, char operator2) {
   int op_precedence = -2;
   switch (operator1) {
-      case '*':
+      case '/':
         switch (operator2) {
+          case '/':
+            op_precedence = 0;
+            break;
           case '*':
             op_precedence = 0;
             break;
-          case '&':
+          case '+':
             op_precedence = 1;
             break;
-          case '|':
+          case '-':
             op_precedence = 1;
             break;
         }
         break;
-      case '&':
+      case '*':
         switch (operator2) {
-          case '*':
-            op_precedence = -1;
-            break;
-          case '&':
+          case '/':
             op_precedence = 0;
             break;
-          case '|':
+          case '*':
+            op_precedence = 0;
+            break;
+          case '+':
+            op_precedence = 1;
+            break;
+          case '-':
             op_precedence = 1;
             break;
         }
       break;
-      case '|':
+      case '+':
         switch (operator2) {
+          case '/':
+            op_precedence = -1;
+            break;
           case '*':
             op_precedence = -1;
             break;
-          case '&':
+          case '+':
+            op_precedence = 0;
+            break;
+          case '-':
+            op_precedence = 0;
+            break;
+        }
+      break;
+      case '-':
+        switch (operator2) {
+          case '/':
             op_precedence = -1;
             break;
-          case '|':
+          case '*':
+            op_precedence = -1;
+            break;
+          case '+':
+            op_precedence = 0;
+            break;
+          case '-':
             op_precedence = 0;
             break;
         }
