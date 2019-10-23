@@ -1,0 +1,8 @@
+Infija	Postfija	Prefija	Nodos
+===================================
+a	a	a	1	
+a|b	ab|	|ab	3	
+a*	a*	*a	2	
+(a|b)*	ab|*	*|ab	4	
+(ab|ba)*	ab&ba&|*	*|&ab&ba	8	
+a|(b(ab*a)*ba*)	abab*&a&*&b&a*&|	|a&&&b*&&a*bab*a	16	
